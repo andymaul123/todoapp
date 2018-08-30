@@ -19,30 +19,27 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET - return user by id */
-router.get('/', function(req, res, next) {
-  var users = store.readItem(req.body.id);
+router.get('/:id', function(req, res, next) {
+  var users = store.readItem(req.params.id);
+  res.json(users);
+});
+
+/* GET - return user by name */
+router.get('/:name', function(req, res, next) {
+  var users = store.readItem(req.params.name);
   res.json(users);
 });
 
 /* PUT - update specific user's name by id */
-router.put('/', function(req, res, next) {
-    var updatedUser = store.updateItem(req.body.id,req.body.name);
-    if(null != updatedUser) {
-      res.send(updatedUser);
-    } else {
-      res.send("Update user failed");
-    }
+router.put('/:id', function(req, res, next) {
+    var updatedUser = store.updateItem(req.params.id,req.query.name);
+    res.send(updatedUser);
 });
 
 /* DELETE - delete specific user by id */
-router.delete('/', function(req, res, next) {
-    var deletedUser = store.deleteItem(req.body.id);
-    if(null != deletedUser) {
-      res.send(deletedUser);
-    } else {
-      res.send("Delete user failed");
-    }
-
+router.delete('/:id', function(req, res, next) {
+    var deletedUser = store.deleteItem(req.params.id);
+    res.send(deletedUser);
 });
 
 

@@ -4,8 +4,9 @@ var createItem = function(id,name){
     var newItem = {};
     newItem.id = id;
     newItem.name = name;
+    newItem.listRefs = [];
     store.push(newItem);
-    return "Successfully created new user.";
+    return newItem;
 };
 
 var readItem = function(id){
@@ -24,11 +25,11 @@ var updateItem = function(id,newName){
         for (var i = store.length - 1; i >= 0; i--) {
             if(store[i].id == id) {
                 store[i].name = newName;
-                return "Updated user successfully.";
+                return store[i];
             }
         }
     }
-    return "Failed to update user.";
+    return null;
 };
 
 var deleteItem = function(id){
@@ -36,9 +37,9 @@ var deleteItem = function(id){
         store = store.filter(function(item) {
             return item.id !== id;
         });
-        return "Deleted user."
+        return store;
     }
-    return "Failed to delete user.";
+    return null;
 };
 
 module.exports = {
