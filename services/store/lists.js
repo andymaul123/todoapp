@@ -1,15 +1,14 @@
 var store = [];
 
-var createItem = function(id,name){
+var createList = function(id,listData){
     var newItem = {};
     newItem.id = id;
-    newItem.name = name;
-    newItem.listRefs = [];
+    newItem.listData = listData;
     store.push(newItem);
     return newItem;
 };
 
-var readItem = function(id){
+var readList = function(id){
     if(id){
         var matchedItems = store.filter(function(item){
             return item.id === id;
@@ -20,11 +19,11 @@ var readItem = function(id){
     }
 };
 
-var updateItem = function(id,newName){
-    if (newName) {
+var updateList = function(id,listData){
+    if (listData) {
         for (var i = store.length - 1; i >= 0; i--) {
             if(store[i].id == id) {
-                store[i].name = newName;
+                store[i].listData = listData;
                 return store[i];
             }
         }
@@ -32,7 +31,7 @@ var updateItem = function(id,newName){
     return null;
 };
 
-var deleteItem = function(id){
+var deleteList = function(id){
     if (id) {
         store = store.filter(function(item) {
             return item.id !== id;
@@ -43,8 +42,8 @@ var deleteItem = function(id){
 };
 
 module.exports = {
-    createItem: createItem,
-    readItem: readItem,
-    updateItem: updateItem,
-    deleteItem: deleteItem
+    createList: createList,
+    readList: readList,
+    updateList: updateList,
+    deleteList: deleteList
 };

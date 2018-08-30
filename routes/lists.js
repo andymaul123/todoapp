@@ -1,44 +1,38 @@
 const   express = require('express'),
         router = express.Router(),
-        store = require('../services/store'),
+        store = require('../services/store/lists.js'),
         uuid = require('uuid/v1');
 
-// /users
+// /lists
 
-/* POST - create user */
+/* POST - create list */
 router.post('/', function(req, res, next) {
-    var name = req.body.name ? req.body.name : "";
-    var newUser = store.createItem(uuid(),name);
-    res.json(newUser);
+    var listData = req.body.listData ? req.body.listData : [];
+    var newList = store.createList(uuid(),listData);
+    res.json(newList);
 });
 
-/* GET - return all users */
+/* GET - return all lists */
 router.get('/', function(req, res, next) {
-    var users = store.readItem();
-    res.json(users);
+    var lists = store.readList();
+    res.json(lists);
 });
 
-/* GET - return user by id */
-router.get('/:id', function(req, res, next) {
-  var users = store.readItem(req.params.id);
-  res.json(users);
+/* GET - return list by id */
+router.get('/', function(req, res, next) {
+  var lists = store.readList(req.body.id);
+  res.json(lists);
 });
 
-/* GET - return user by name */
-router.get('/:name', function(req, res, next) {
-  var users = store.readItem(req.params.name);
-  res.json(users);
+/* PUT - replace specific list's contents, by id, with new contents */
+router.put('/', function(req, res, next) {
+    var updatedList = store.updateList(req.body.id,req.body.listData);
+    res.send(updatedList);
 });
 
-/* PUT - update specific user's name by id */
-router.put('/:id', function(req, res, next) {
-    var updatedUser = store.updateItem(req.params.id,req.query.name);
-    res.send(updatedUser);
-});
-
-/* DELETE - delete specific user by id */
-router.delete('/:id', function(req, res, next) {
-    var deletedUser = store.deleteItem(req.params.id);
+/* DELETE - delete specific list by id */
+router.delete('/', function(req, res, next) {
+    var deletedUser = store.deleteList(req.body.id);
     res.send(deletedUser);
 });
 
