@@ -41,9 +41,15 @@ var deleteList = function(id){
     return null;
 };
 
+// For testing purposes
+var clearAllLists = function() {
+    store = [];
+}
+
 module.exports = {
     createList: createList,
     readList: readList,
     updateList: updateList,
-    deleteList: deleteList
+    deleteList: deleteList,
+    clearAllLists: clearAllLists
 };
