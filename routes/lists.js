@@ -32,8 +32,8 @@ router.put('/', function(req, res, next) {
 
 /* DELETE - delete specific list by id */
 router.delete('/', function(req, res, next) {
-    var deletedUser = store.deleteList(req.body.id);
-    res.send(deletedUser);
+    var deletedList = store.deleteList(req.body.id);
+    res.send(deletedList);
 });
 
 

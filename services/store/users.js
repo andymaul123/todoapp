@@ -45,9 +45,15 @@ var deleteUser = function(id){
     return null;
 };
 
+// For testing purposes
+var clearAllUsers = function() {
+    store = [];
+}
+
 module.exports = {
     createUser: createUser,
     readUser: readUser,
     updateUser: updateUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    clearAllUsers: clearAllUsers
 };
