@@ -6,18 +6,21 @@ var createUser = function(id,name){
     newItem.name = name;
     newItem.listRefs = [];
     store.push(newItem);
-    return newItem;
+    return delayResponse(newItem);
 };
 
 var readUser = function(id){
+    var results;
     if(id){
         var matchedItems = store.filter(function(item){
             return item.id === id;
         });
-        return matchedItems[0];
+        results = matchedItems[0];
     } else {
-        return store;
+        results = store;
     }
+    return delayResponse(results);
+
 };
 
 var updateUser = function(id,newName,listRefs){
@@ -29,10 +32,10 @@ var updateUser = function(id,newName,listRefs){
             if(null != listRefs) {
                 store[i].listRefs = listRefs;
             }
-            return store[i];
+            return delayResponse(store[i]);
         }
     }
-    return null;
+    return delayResponse(null);
 };
 
 var deleteUser = function(id){
@@ -40,15 +43,22 @@ var deleteUser = function(id){
         store = store.filter(function(item) {
             return item.id !== id;
         });
-        return store;
+        return delayResponse(store);
     }
-    return null;
+    return delayResponse(null);
 };
 
-// For testing purposes
+// Utils
 var clearAllUsers = function() {
     store = [];
 }
+var delayResponse = function(results) {
+    return new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve(results);
+        }, 3000);
+    });
+};
 
 module.exports = {
     createUser: createUser,

@@ -1,6 +1,6 @@
 var expect = require('chai').expect,
     store = require('../../../../services/store/users.js'),
-    flush = require('flush-cache');
+    sinon = require('sinon');
 
 // Mock data values
 
@@ -19,12 +19,21 @@ var billy = {
 // Test Cases
 
 describe('Users - Store', function() {
-
+    this.timeout(3500);
     beforeEach(store.clearAllUsers);
 
     describe('createUser', function() {
-        it('should create a new user with a given ID and name', function() {
-            expect(store.createUser(1,"Bob")).to.deep.equal(bob);
+        it('should create a new user with a given ID and name', function(done) {
+            sinon.stub(store, 'createUser').callsFake(function(id,name){
+                return new Promise(function(resolve){
+                    resolve(billy);
+                });
+            });
+            store.createUser(1,"Bob")
+            .then(function(user){
+                expect(user).to.deep.equal(bob);
+                done();
+            });
         });
     });
 
